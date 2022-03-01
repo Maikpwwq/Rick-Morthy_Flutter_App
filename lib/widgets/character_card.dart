@@ -14,19 +14,6 @@ class CharacterCard extends StatefulWidget {
 
 class _CharacterCardState extends State<CharacterCard> {
 
-  @override
-  void initState() {
-    super.initState();
-    loadCharacters();
-  }
-
-  void loadCharacters() async {
-    try {
-      // snap =
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +37,7 @@ class _CharacterCardState extends State<CharacterCard> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
+                          // widget.snap['name']
                           'Personaje',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
@@ -60,7 +48,9 @@ class _CharacterCardState extends State<CharacterCard> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+
+                  },
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -68,6 +58,7 @@ class _CharacterCardState extends State<CharacterCard> {
                         height: MediaQuery.of(context).size.height * 0.35,
                         width: double.infinity,
                         child: Image.network(
+                          // widget.snap['image']
                           'https://images.unsplash.com/photo-1646072101241-c007850a2619?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
                           fit: BoxFit.cover,
                         ),
