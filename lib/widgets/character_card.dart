@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rick_morthy_flutter_app/widgets/detailed_card.dart';
+
+import '../models/character.dart';
 
 class CharacterCard extends StatefulWidget {
   final snap;
@@ -14,6 +17,30 @@ class CharacterCard extends StatefulWidget {
 
 class _CharacterCardState extends State<CharacterCard> {
 
+  @override
+  void initState() {
+    super.initState();
+    loadInfo();
+  }
+
+  void loadInfo() async {
+    try {
+      // Character snap = Character.fromJson(widget.snap);
+      print(widget.snap.name);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  openDetail(int characterId) async {
+    final CharacterId = characterId;
+    print(CharacterId);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const DetailedCard(snap: 'hello detail'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +50,10 @@ class _CharacterCardState extends State<CharacterCard> {
       child: Column(
         children: [
           Container(
+            height: 110,
             padding: const EdgeInsets.symmetric(
-              vertical: 4,
-              horizontal: 16,
+              vertical: 1,
+              horizontal: 10,
             ),
             child: Column(
               children: [
@@ -37,35 +65,35 @@ class _CharacterCardState extends State<CharacterCard> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          // widget.snap['name']
-                          'Personaje',
+                          widget.snap.name, // 'Personaje'
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            await openDetail(widget.snap.id);
+                          },
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.30,
+                                // width: double.infinity,
+                                child: Image.network(
+                                  widget.snap.image, // 'https://images.'
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () async {
 
-                  },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.35,
-                        width: double.infinity,
-                        child: Image.network(
-                          // widget.snap['image']
-                          'https://images.unsplash.com/photo-1646072101241-c007850a2619?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
+
               ],
             ),
           ),

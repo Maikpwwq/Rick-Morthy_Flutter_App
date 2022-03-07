@@ -22,7 +22,7 @@ class HttpMethods {
     final response = await http.get(Uri.parse(url+'api/character/'+'?page=2'));
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body)['results'];
-      print(jsonDecode(response.body)['results']);
+      print(jsonResponse);
       CharacterList characterList = CharacterList.fromJson(jsonResponse);
       return characterList;
     } else {
