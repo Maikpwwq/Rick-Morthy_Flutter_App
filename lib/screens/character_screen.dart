@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:rick_morthy_flutter_app/models/character.dart';
 import 'package:rick_morthy_flutter_app/resources/http_methods.dart';
@@ -31,6 +33,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
         title: const Text('Personajes Rick & Morthy'),
       ),
       body: ListView(
+        // shrinkWrap: true,
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -46,42 +49,39 @@ class _CharacterScreenState extends State<CharacterScreen> {
               ],
             ),
           ),
-          FutureBuilder<CharacterList>(
-            future: futureCharacter,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 1.5,
-                    childAspectRatio: 1,
-                  ),
-                  shrinkWrap: true,
-                  itemCount: (snapshot.data! as dynamic).characters.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: Image (
-                        image: NetworkImage(
-                            'https://images.unsplash.com/photo-1594075855177-c9ccafed8e54?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+          SizedBox(
+            height: 480,
+            child: FutureBuilder<CharacterList>(
+              future: futureCharacter,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5,
+                      childAspectRatio: 1,
+                    ),
+                    shrinkWrap: true,
+                    itemCount: (snapshot.data! as dynamic).characters.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child:
+                        CharacterCard(
+                          snap: (snapshot.data! as dynamic).characters[index],
                         ),
-                        fit: BoxFit.cover,
-                      ),
-                      // CharacterCard(
-                      //   //[(snapshot.data! as dynamic).characters.map((e) => e.image.toString())];
-                      //   snap: (snapshot.data! as dynamic).characters[index],
-                      // ),
-                    );
-                  },
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+                // By default, show a loading spinner.
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              // By default, show a loading spinner.
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+              },
+            ),
           ),
         ],
       ),
