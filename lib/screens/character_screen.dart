@@ -50,13 +50,11 @@ class _CharacterScreenState extends State<CharacterScreen> {
             ),
           ),
           SizedBox(
-            height: 450,
+            height: 480,
             child: FutureBuilder<CharacterList>(
               future: futureCharacter,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  // List<Character> personajes = (snapshot.data! as dynamic).characters.map((e) => e.image.toString());
-                  // print('This is snapshot: {$personajes}');
                   return GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
@@ -69,12 +67,6 @@ class _CharacterScreenState extends State<CharacterScreen> {
                     itemBuilder: (context, index) {
                       return Container(
                         child:
-                        // Image (
-                        //   image: NetworkImage(
-                        //       'https://images.unsplash.com/photo-1594075855177-c9ccafed8e54?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-                        //   ),
-                        //   fit: BoxFit.cover,
-                        // ),
                         CharacterCard(
                           snap: (snapshot.data! as dynamic).characters[index],
                         ),
